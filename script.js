@@ -4,19 +4,10 @@ const currentWeather = document.getElementById('current-weather');
 const forecastContainer = document.getElementById('forecast-container');
 const forecastSection = document.getElementById('forecast');
 const loading = document.getElementById('loading');
-const themeToggle = document.getElementById('theme-toggle');
 
 let lastSearchedCity = localStorage.getItem('lastCity') || 'Dhaka';
 
-// Theme Toggle
-themeToggle.addEventListener('click', () => {
-    document.documentElement.classList.toggle('dark');
-    const icon = themeToggle.querySelector('i');
-    icon.classList.toggle('fa-moon');
-    icon.classList.toggle('fa-sun');
-});
-
-// Search
+// Search handlers
 searchBtn.addEventListener('click', searchWeather);
 cityInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') searchWeather();
@@ -24,10 +15,12 @@ cityInput.addEventListener('keypress', (e) => {
 
 function searchWeather() {
     const city = cityInput.value.trim();
-    if (city) getWeatherData(city);
+    if (city) {
+        getWeatherData(city);
+    }
 }
 
-// Show/Hide Loading
+// Toggle Loading
 function toggleLoading(show) {
     loading.classList.toggle('hidden', !show);
 }
@@ -51,7 +44,7 @@ async function getCoordinates(city) {
     };
 }
 
-// Get Weather
+// Main Weather Function
 async function getWeatherData(city) {
     toggleLoading(true);
     currentWeather.classList.add('hidden');
@@ -76,7 +69,7 @@ async function getWeatherData(city) {
         renderForecast(data.daily);
 
     } catch (error) {
-        alert("City not found or failed to fetch data. Please try again.");
+        alert("City not found or failed to fetch weather data. Please try again.");
         console.error(error);
     } finally {
         toggleLoading(false);
@@ -89,7 +82,7 @@ function renderCurrentWeather(data, location) {
     const description = getWeatherDescription(current.weather_code);
 
     currentWeather.innerHTML = `
-        <div class="glass rounded-3xl p-8 weather-card">
+        <div class="glass rounded-3xl p-8">
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div>
                     <h2 class="text-7xl font-light">${Math.round(current.temperature_2m)}°C</h2>
@@ -110,7 +103,7 @@ function renderCurrentWeather(data, location) {
     forecastSection.classList.remove('hidden');
 }
 
-// Render Forecast
+// Render 7-Day Forecast
 function renderForecast(daily) {
     forecastContainer.innerHTML = '';
 
@@ -119,7 +112,7 @@ function renderForecast(daily) {
         const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
 
         const card = document.createElement('div');
-        card.className = "glass rounded-3xl p-6 text-center weather-card";
+        card.className = "glass rounded-3xl p-6 text-center";
         card.innerHTML = `
             <p class="font-medium mb-2">${dayName}</p>
             <p class="text-6xl my-4">${getWeatherEmoji(daily.weather_code[i])}</p>
@@ -152,7 +145,7 @@ function getWeatherEmoji(code) {
     return "🌥️";
 }
 
-// Initialize App
+// Initialize
 window.onload = () => {
     getWeatherData(lastSearchedCity);
 };
