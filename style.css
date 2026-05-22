@@ -1,1 +1,22 @@
-@tailwind base;@tailwind components;@tailwind utilities;body{font-family:'Segoe UI',system-ui,sans-serif;}.glass{background:rgba(255,255,255,0.08);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.1);}.weather-card{transition:all 0.3s ease;}.weather-card:hover{transform:translateY(-8px);box-shadow:0 20px 25px -5px rgb(0 0 0 / 0.1),0 8px 10px -6px rgb(0 0 0 / 0.1);}.favorite-btn{transition:transform 0.2s ease,color 0.2s ease;}.favorite-btn:hover{transform:scale(1.1);}.favorite-btn.active{color:#ff6b6b;}.error-toast{animation:slideIn 0.3s ease forwards;}@keyframes slideIn{from{transform:translateX(400px);opacity:0;}to{transform:translateX(0);opacity:1;}}@keyframes slideOut{from{transform:translateX(0);opacity:1;}to{transform:translateX(400px);opacity:0;}}.error-toast.hide{animation:slideOut 0.3s ease forwards;}@media (prefers-color-scheme:dark){body{background:linear-gradient(to bottom right,#0f172a,#1e1b4b);}}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.weather-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.weather-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.2);
+}
